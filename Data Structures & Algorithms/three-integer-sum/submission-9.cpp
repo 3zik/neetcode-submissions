@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        std::vector<vector<int>> res;
+
+        for (int i = 0; i < nums.size(); ++i){
+            // i is the first one
+            // if i is positive, the rest of the nums will be positive, so we cant use it
+            if (nums[i] > 0) break;
+            // if i is the same as the prev num, we dont need to use
+            if (i > 0 && nums[i] == nums[i-1]) continue;
+            // then two ptr result from here
+            int l = i+1;
+            int r = nums.size() - 1;
+            while (l < r){
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum > 0){
+                    r--;
+                } else if (sum < 0){
+                    l++;
+                } else {
+                    res.push_back({nums[i], nums[l], nums[r]});
+                    l++;
+                    r--;
+                    while (l<r && nums[l] == nums[l-1]) {
+                        l++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
